@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { authenticate, authorizeAdmin } from "../middleware/authMiddleware";
+import * as userController from "../controllers/userController";
 
 export const userRoutes = Router();
 
@@ -14,6 +15,9 @@ userRoutes.get("/");
 
 // Get a specific user
 userRoutes.get("/:id");
+
+// Get current user profile
+userRoutes.get("/me", authenticate, userController.getCurrentUser);
 
 // Update a user (admin only)
 userRoutes.put("/:id", authorizeAdmin);
